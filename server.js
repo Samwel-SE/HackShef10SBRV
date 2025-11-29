@@ -1,45 +1,25 @@
-import express from 'express';
-import OpenAI from 'openai';
+import OpenAI from "openai";
+import express from "express";
+
 import 'dotenv/config';
-import path from 'path';
-import cors from 'cors';
+
+const OPEN_AI_KEY = process.env.OPENAI_API_KEY;
 
 const app = express();
-const PORT = 5000;
-const apiKey = process.env.ZUKI_API_KEY;
-const corsOptions = {
-  origin: ["http://localhost:5173"],
-};
+const client = new OpenAI( { apiKey: process.env.OPENAI_API_KEY } );
 
-const client = new OpenAI({
-  baseURL: 'https://api.zukijourney.com/v1',
-  apiKey: apiKey,
-});
-
-app.use(cors(corsOptions));
 app.use(express.json());
 
+app.post("/story", async (req, res) => {
+    const { startCityInput, timeInput } = req.body;
 
-app.get('/', (req, res) => {
-  res.send("Hello world");
-});
-
-app.post('/', async (req, res) => {
-  const { messages } = req.body;
-
-  try {
-    //Interact with the AI
-    //Something here throwing error
-    const response = await client.chat.completions.create({
-      model: 'gpt-4o-mini',
-      messages: messages
+    const response = await client.responses.create({
+        model: "gpt-5-nano",
+        input: `Tell a story set in ${startCityInput} during the year ${timeInput}`
     });
-    res.json(response.choices[0].message.content);
 
-  } catch (error) {
-    console.log('massive error');
-    res.status(500).json({ error: error.message });
-  }
+    res.json({ text: response.output_text });
 });
 
-app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+
+app.listen(3000, () => console.log("Server running"));
