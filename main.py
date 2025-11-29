@@ -4,7 +4,7 @@ from openai import OpenAI
 from agents import Agent, Runner
 
 load_dotenv()
-<<<<<<< HEAD
+
 key = os.getenv("OPENAI_API_KEY")
 os.environ["OPENAI_API_KEY"] = key
 
@@ -21,6 +21,6 @@ result = Runner.run_sync(agent, "Write a haiku about a recursion in programming"
 #)
 
 print(result.final_output)
-=======
+
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
->>>>>>> 06e988c6970bfb284c759467d9ec330115f7f13d
+
