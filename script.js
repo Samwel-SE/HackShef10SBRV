@@ -1,4 +1,4 @@
-import axios from 'axios';
+
 
 function getFormInput() {
     return new Promise((resolve) => {
@@ -18,21 +18,18 @@ function getFormInput() {
 async function getsAIResponse() {
     await getFormInput().then(async ({startCityInput, timeInput}) => {
 
-        // console.log(startCityInput);
-        // console.log(timeInput);
+        console.log(startCityInput);
+        console.log(timeInput);
 
 
-        // const res = await fetch("/data", {
-        //     method: "POST",
-        //     body: JSON.stringify({ startCityInput, timeInput })
-        // });
-
-        return await axios.post("/data", {
+        const res = await fetch("http://localhost:3000/story", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ startCityInput, timeInput })
         });
 
-        // const data = await res.json();
-        // console.log(data.text);
+        const data = await res.json();
+        console.log(data.text);
 
     })
 

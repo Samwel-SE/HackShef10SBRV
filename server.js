@@ -1,6 +1,6 @@
 import OpenAI from "openai";
 import express from "express";
-
+import cors from "cors";
 import 'dotenv/config';
 
 const OPEN_AI_KEY = process.env.OPENAI_API_KEY;
@@ -8,10 +8,14 @@ const OPEN_AI_KEY = process.env.OPENAI_API_KEY;
 const app = express();
 const client = new OpenAI( { apiKey: process.env.OPENAI_API_KEY } );
 
+
+app.use(cors());
 app.use(express.json());
 
 app.post("/story", async (req, res) => {
     const { startCityInput, timeInput } = req.body;
+
+    console.log("Starting City: " + startCityInput + " time: " + timeInput)
 
     const response = await client.responses.create({
         model: "gpt-5-nano",
@@ -19,7 +23,8 @@ app.post("/story", async (req, res) => {
     });
 
     res.json({ text: response.output_text });
+    console.log(response);
 });
 
 
-app.listen(3000, () => console.log("Server running"));
+app.listen(3000, () => console.log("Server running on port 3000"));
