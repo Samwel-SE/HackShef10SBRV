@@ -10,11 +10,15 @@ def home():
 def success(name):
     return f'welcome {name}'
 
+
 @app.route('/login', methods=['POST', 'GET'])
 def login():
+
     if request.method == 'POST':
         user = request.form['nm']
+        print(user)
         return redirect(url_for('success', name=user))
+    
     else:
         user = request.args.get('nm')
         return redirect(url_for('success', name=user))
