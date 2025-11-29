@@ -1,0 +1,17 @@
+{
+  "name": "hackshefsbrv",
+  "version": "1.0.0",
+  "description": "Repository for our HackSheffield10 project",
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "openai": "^6.9.1"
+  }
+}
