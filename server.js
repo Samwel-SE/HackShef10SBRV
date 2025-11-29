@@ -47,4 +47,5 @@ async function textToSpeech(inputText) {
 
   await playAudio(response);
 }
+textToSpeech("Hello motherfuckers");
 
