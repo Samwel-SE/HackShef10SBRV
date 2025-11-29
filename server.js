@@ -13,13 +13,17 @@ app.use(cors());
 app.use(express.json());
 
 app.post("/story", async (req, res) => {
-    const { startCityInput, timeInput } = req.body;
+    const { startLocation, endLocation} = req.body;
 
-    console.log("Starting City: " + startCityInput + " time: " + timeInput)
+    console.log("Starting City: " + startLocation + "Ending City: " + endLocation)
 
     const response = await client.responses.create({
-        model: "gpt-5-nano",
-        input: `Tell a story set in ${startCityInput} during the year ${timeInput}`
+        model: "gpt-4-turbo",
+        input: `Tell a 400 word mythological story from ${startLocation} to ${endLocation}.
+                Tell the story from the perspective of 4 characters with different ages and backgrounds.
+                The first character journeys from the ${startLocation} to ${endLocation} and meets the
+                other characters along the way`
+                
     });
 
     res.json({ text: response.output_text });
