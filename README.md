@@ -1,2 +1,2 @@
 # HackShef10SBRV
-our hacksheffield repo
+Repository for our HackSheffield10 project 
