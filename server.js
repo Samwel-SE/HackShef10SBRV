@@ -46,7 +46,6 @@ app.post("/story", async (req, res) => {
       Then, after the CSV, write the story using:
       CharacterName: text
 
-      
       Do NOT put voices inside the story itself.
       
       Format strictly like:
@@ -130,6 +129,36 @@ app.post("/story", async (req, res) => {
 });
 
 
+app.post("/analyze", async (req, res) => {
+  const { storySoFar, query } = req.body;
+
+  
+  console.log("Query:", query);
+  
+  try {
+    // Generate story with speaker tags
+    const textResponse = await client.responses.create({
+      model: "gpt-4-turbo",
+      input: `Act as if you have a wide knowledge on literature, literature techniques and the like. Answer what the user asks about the story.
+      This is the story so far ---${storySoFar}---. And this is the Users query ---${query}---
+
+      Write critically and indepth unless otherwise stated. Be concise but detailed.
+
+      !Test Mode, keep it to one short sentence!
+      `
+    });
+    
+    const answer = textResponse.output_text;
+    console.log("Generated Answer:", answer);
+
+
+    res.json({ answer });
+
+  } catch (err) {
+    console.error("Error generating story:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
 
 
 app.listen(3000, () => console.log("Server running on port 3000"));

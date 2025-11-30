@@ -19,6 +19,21 @@ function getFormInput() {
     });
 }
 
+function getQuery(){
+      return new Promise((resolve) => {
+        const form = document.getElementById("queryForm");
+
+        form.addEventListener("submit", (event) => {
+            event.preventDefault();
+            
+            const query = form.elements.namedItem("query").value;
+
+            resolve({ query });
+        }, { once: true }); // ensures no duplicate listeners
+    });
+
+}
+
 let storySoFar = "";
 
 async function playStory() {
@@ -57,7 +72,7 @@ async function playStory() {
         }
         
         storyDiv.appendChild(p);
-        //storySoFar.append(`${seg.speaker}: ${seg.text}\n`)
+        storySoFar = storySoFar + `${seg.speaker}: ${seg.text}\n`
 
         
         document.getElementById("typewriter").hidden = true;
@@ -76,6 +91,29 @@ async function playStory() {
   }
 }
 
+async function askQuery() {
+
+    const { query } = await getQuery();
+    console.log("Client sending:", query);
+    
+    const res = await fetch("http://localhost:3000/analyze", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ storySoFar, query })
+    });
+
+    const data = await res.json();
+    console.log(data);
+
+    const responseDiv = document.getElementById("queryResponse");
+    responseDiv.innerHTML = ""
+    const p = document.createElement("p");
+    p.innerHTML = data.answer;
+    responseDiv.appendChild(p);
+
+}
+
+
 function showPopup() {
     document.getElementById("typewriter").hidden = false;
     document.getElementById("default-modal").classList.remove("hidden");
@@ -87,7 +125,7 @@ function hidePopup() {
 
     document.getElementById("continue").hidden = true;
     const audio = document.getElementById("aiAudio");
-
+2
     // Stop audio immediately
     audio.pause();
     audio.src = "";         // <<< THIS STOPS THE pending onended event
