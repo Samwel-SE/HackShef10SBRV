@@ -50,6 +50,7 @@ async function playStory() {
         p.innerHTML = `<b>${seg.speaker} (${seg.voice}):</b> ${seg.text}`;
         storyDiv.appendChild(p);
         
+        document.getElementById("typewriter").hidden = true;
         document.getElementById("continue").hidden = false;
         await new Promise(resolve => {
         audioEl.src = url;        
@@ -57,7 +58,6 @@ async function playStory() {
         audioEl.onended = resolve;
         }
     );
-
         
 
     //waits for the continue button to be pressed to get the next string read

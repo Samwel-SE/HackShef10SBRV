@@ -1,4 +1,8 @@
 /* From Uiverse.io by Nawsome */ 
+#text {
+  color: blue;
+}
+
 #typewriter {
   --blue: #5C86FF;
   --blue-dark: #275EFE;

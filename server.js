@@ -23,7 +23,7 @@ app.post("/story", async (req, res) => {
     // Generate story with speaker tags
     const textResponse = await client.responses.create({
       model: "gpt-4-turbo",
-      input: `Write a story like Homer's "Odyssey" that takes place from ${startLocation} to ${endLocation}.
+      input: ` max 20 words Write a story like Homer's "Odyssey" that takes place from ${startLocation} to ${endLocation}.
       The story should be historic where possible, witty, and engaging.
       The narrator should function like the parts of a book that arent dialogue. So it should be the majority.
       Make scenes somewhat continuous. 
@@ -40,7 +40,7 @@ app.post("/story", async (req, res) => {
       - Every character name must be ONE word when referenced as a speaker, they may have a canon last name.
       - Assign each character ONE voice from the list, there may be multiple characters with the same model.
       - The CSV must include every character that speaks.
-      - Max 200 Words!!!
+      - Max 20 Words!!!
       
       Then, after the CSV, write the story using:
       CharacterName: text
