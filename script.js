@@ -15,11 +15,33 @@ function getFormInput() {
     });
 }
 
+function sleep(ms){
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+//pauses for 2 seconds, implemented later on
+async function pause(){
+    console.log("waiting for user to press the button!")
+    sleep(2000)
+}
+
+//
+function waitForContinue(){
+    return new Promise(resolve => {
+        const btn = document.getElementById("continue");
+        btn.onclick = () => {
+            resolve()
+        }
+    })
+
+}
+
 
 async function playStory() {
+
   const { startLocation, endLocation } = await getFormInput();
   console.log("Client sending:", startLocation, endLocation);
-
+  
   const res = await fetch("http://localhost:3000/story", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -31,7 +53,7 @@ async function playStory() {
   const audioEl = document.getElementById("aiAudio");
   const storyDiv = document.getElementById("aiResponse");
   storyDiv.innerHTML = "";
-  buttonPressed = true;
+  
 
   for (const seg of data.segments) {
     const audioBlob = new Blob(
@@ -43,17 +65,20 @@ async function playStory() {
     // Show text and voice info
     const p = document.createElement("p");
     p.innerHTML = `<b>${seg.speaker} (${seg.voice}):</b> ${seg.text}`;
+    storyDiv.appendChild(p);
     
-    
-    if (buttonPressed){
-        storyDiv.appendChild(p);
-    }
-    
+    document.getElementById("continue").hidden = false;
     await new Promise(resolve => {
       audioEl.src = url;
       audioEl.play();
       audioEl.onended = resolve;
     });
+
+    
+
+    //waits for the continue button to be pressed to get the next string read
+    await waitForContinue();
+
   }
 }
 
