@@ -67,6 +67,7 @@ async function playStory() {
 }
 
 function showPopup() {
+    document.getElementById("typewriter").hidden = false;
     document.getElementById("default-modal").classList.remove("hidden");
 }
 
@@ -84,6 +85,6 @@ function hidePopup() {
 
 
     document.getElementById("default-modal").classList.add('hidden');
-    document.getElementById("aiResponse").innerHTML = "... waiting for ai response ...";
+    document.getElementById("aiResponse").innerHTML = "";
     console.log(document.getElementById("aiResponse"));
 }
