@@ -19,6 +19,8 @@ function getFormInput() {
     });
 }
 
+let storySoFar = "";
+
 async function playStory() {
     showPopup();
 
@@ -51,8 +53,10 @@ async function playStory() {
         if (seg.speaker == "Narrator"){
           p.innerHTML = `${seg.text}`;
         }else{
-          p.innerHTML = `<b>${seg.speaker} (${seg.voice}):</b> ${seg.text}`;
+          p.innerHTML = `<b>${seg.speaker}:</b> ${seg.text}`;
         }
+
+        storySoFar.append(`${seg.speaker}: ${seg.text}\n`)
 
         storyDiv.appendChild(p);
         
