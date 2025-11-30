@@ -20,7 +20,7 @@ app.post("/story", async (req, res) => {
     // Generate story with speaker tags
     const textResponse = await client.responses.create({
       model: "gpt-4-turbo",
-      input: `Write a 400-word mythological story from ${startLocation} to ${endLocation}.
+      input: `Write a 200-word mythological story from ${startLocation} to ${endLocation}.
               Format the story like this:
               Narrator: [text]\n
               CharacterName: [dialogue or thought]\n -- a character identifier cannot have a multiple words
