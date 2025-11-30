@@ -41,7 +41,13 @@ async function playStory() {
         const url = URL.createObjectURL(audioBlob);
         // Show text and voice info
         const p = document.createElement("p");
-        p.innerHTML = `<b>${seg.speaker} (${seg.voice}):</b> ${seg.text}`;
+
+        if (seg.speaker == "Narrator"){
+          p.innerHTML = `${seg.text}`;
+        }else{
+          p.innerHTML = `<b>${seg.speaker} (${seg.voice}):</b> ${seg.text}`;
+        }
+
         storyDiv.appendChild(p);
         
         document.getElementById("continue").hidden = false;
