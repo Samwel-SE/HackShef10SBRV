@@ -1,3 +1,11 @@
+function waitForContinue(buttonId) {
+  return new Promise(resolve => {
+    document.getElementById(buttonId).addEventListener('click', resolve, { once: true });
+  });
+}
+
+
+
 function getFormInput() {
     return new Promise((resolve) => {
         const form = document.getElementById("myForm");
