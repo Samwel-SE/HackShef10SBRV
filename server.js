@@ -25,7 +25,7 @@ app.post("/story", async (req, res) => {
       model: "gpt-4-turbo",
       input: `Write a story like Homer's "Odyssey" that takes place from ${startLocation} to ${endLocation}.
       
-      !!THIS IS A TEST, MAKE IT VERY SHORT, and fast, i dont want to use too many output tokens!!
+      !!THIS IS A TEST, MAKE IT VERY SHORT,you can only use 50 words total!!
 
       The story should be historic where possible, witty, and engaging.
       The narrator should function like the parts of a book that arent dialogue. So it should be the majority.
@@ -47,7 +47,6 @@ app.post("/story", async (req, res) => {
       Then, after the CSV, write the story using:
       CharacterName: text
 
-      Separate the stroy into some chapters, and for each chapter generate a promt for an image that represents that chapter
       
       Do NOT put voices inside the story itself.
       
@@ -60,7 +59,6 @@ app.post("/story", async (req, res) => {
       ...
       
       ### STORY
-      ## {CHAPTER IAMGE DESCRIPTION}
       Narrator: text...
       Ares: text...
       Hera: text..
