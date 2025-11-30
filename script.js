@@ -1,5 +1,3 @@
-
-
 function getFormInput() {
     return new Promise((resolve) => {
         const form = document.getElementById("myForm");
@@ -14,7 +12,6 @@ function getFormInput() {
         }, { once: true }); // ensures no duplicate listeners
     });
 }
-
 
 async function playStory() {
   const { startLocation, endLocation } = await getFormInput();
