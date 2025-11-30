@@ -4,8 +4,6 @@ function waitForContinue(buttonId) {
   });
 }
 
-
-
 function getFormInput() {
     return new Promise((resolve) => {
         const form = document.getElementById("myForm");
@@ -63,7 +61,7 @@ async function playStory() {
         
 
     //waits for the continue button to be pressed to get the next string read
-    await waitForContinue();
+    await waitForContinue("cotinue");
     
   }
 }
