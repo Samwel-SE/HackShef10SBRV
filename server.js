@@ -56,7 +56,7 @@ function homerPrompt(startLocation, endLocation, voicesPool, narratorVoice) {
 function brainRotPrompt(startLocation, endLocation, voicesPool, narratorVoice) {
   return `Write a story that takes place from ${startLocation} to ${endLocation}.
     include as much braintrot as possible. Include the brainrot that you know and words like "67", "sigma", "skibidi", "rizzler
-    "lebron james", "9/11 tradegy", "cisco packet tracer".
+    "lebron james", "9/11 tradegy", "cisco packet tracer", Fanum tax, Skibidi, Sigma, Gyatt, Rizz, Among us, Ohio, Glazing, Kai cenat, Grimace shake, Mogging, Caseoh, TikTok rizz party, Quandale dingle, Mukbang, Mewing, Mr Belding, Perc 30s, Snow bunny heaven, Bop, Yapping, Fortnite, Alpha, Beta, Cooked, Sussy, Baka, Dame Tu Cosita Alien, Kawaii, Smurf cat, Rawr, .
     Include these words as much as possible  
     The story should be historic where possible, witty, and engaging.
       The narrator should function like the parts of a book that arent dialogue. So it should be the majority.
