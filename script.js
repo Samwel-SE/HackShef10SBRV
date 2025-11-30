@@ -13,30 +13,6 @@ function getFormInput() {
     });
 }
 
-function sleep(ms){
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-//pauses for 2 seconds, implemented later on
-async function pause(){
-    console.log("waiting for user to press the button!")
-    sleep(2000)
-}
-
-//waits until button pressed
-function waitForContinue(){
-    return new Promise(resolve => {
-        const btn = document.getElementById("continue");
-        btn.onclick = () => {
-            resolve()
-        }
-    })
-
-}
-
-
-storyPopupHidden = false ;
-
 async function playStory() {
     showPopup();
 
