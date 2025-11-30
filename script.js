@@ -4,19 +4,37 @@ function waitForContinue(buttonId) {
   });
 }
 
+
+
 function getFormInput() {
+    let mode = "";
+
+
     return new Promise((resolve) => {
         const form = document.getElementById("myForm");
-
+        
         form.addEventListener("submit", (event) => {
             event.preventDefault();
             
             const startLocation = form.elements.namedItem("start").value;
             const endLocation = form.elements.namedItem("end").value;
+            const Btoggle = document.getElementById('brainRot');
+            const Htoggle = document.getElementById('homer');
+               
+            if (Htoggle.checked) {
+                mode = "homer"
+                console.log(mode);
+            }
 
-            resolve({ startLocation, endLocation });
+            if (Btoggle.checked) {
+                mode = "brainRot"
+                console.log(mode);
+            }
+
+            resolve({ startLocation, endLocation, mode });
         }, { once: true }); // ensures no duplicate listeners
     });
+    
 }
 
 function getQuery(){
@@ -39,13 +57,13 @@ let storySoFar = "";
 async function playStory() {
     showPopup();
 
-    const { startLocation, endLocation } = await getFormInput();
-    console.log("Client sending:", startLocation, endLocation);
+    const { startLocation, endLocation, mode } = await getFormInput();
+    console.log("Client sending:", startLocation, endLocation, mode);
     
     const res = await fetch("http://localhost:3000/story", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ startLocation, endLocation })
+        body: JSON.stringify({ startLocation, endLocation, mode })
     });
 
     const data = await res.json();
@@ -81,14 +99,39 @@ async function playStory() {
         audioEl.src = url;        
         audioEl.play();
         audioEl.onended = resolve;
-        }
-    );
+        })
+
+        event.preventDefault(); // Prevent the form from reloading the page
+
+    }
+    
+
+
+
+   
+
+
+    const response = await fetch("http://localhost:3000/story", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            startLocation,
+            endLocation,
+            mode
+        })
+
+        
+    });
+
+  
+    console.log(data);
+    
         
 
     //waits for the continue button to be pressed to get the next string read
     await waitForContinue("continue");
     
-  }
+  
 }
 
 async function askQuery() {
@@ -136,3 +179,10 @@ function hidePopup() {
     document.getElementById("aiResponse").innerHTML = "";
     console.log(document.getElementById("aiResponse"));
 }
+
+const homer = document.getElementById("homer");
+const brainRot = document.getElementById("brainRot");
+
+
+    
+
