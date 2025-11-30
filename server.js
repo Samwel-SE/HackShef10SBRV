@@ -29,8 +29,7 @@ app.post("/story", async (req, res) => {
       Make scenes somewhat continuous. 
       Show, don't tell.
       Dont abuse dialogue, but dont be too afraid of having sizable section of dialogue.
-      You should have main characters and side characters.
-      Make it epic and impactful, but not to self aggrandizing.
+      You should have some main characters and side characters.
 
       First, output a CSV with the columns: Character, Voice
       Use ONLY the following voices for characters:
@@ -41,7 +40,7 @@ app.post("/story", async (req, res) => {
       - Every character name must be ONE word when referenced as a speaker, they may have a canon last name.
       - Assign each character ONE voice from the list, there may be multiple characters with the same model.
       - The CSV must include every character that speaks.
-      - Max 200 Words
+      - Max 200 Words!!!
       
       Then, after the CSV, write the story using:
       CharacterName: text
