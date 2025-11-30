@@ -14,6 +14,7 @@ function getFormInput() {
 }
 
 async function playStory() {
+  showPopup();
   const { startLocation, endLocation } = await getFormInput();
   console.log("Client sending:", startLocation, endLocation);
 
@@ -50,5 +51,10 @@ async function playStory() {
   }
 }
 
+function showPopup() {
+    document.getElementById("default-modal").classList.remove("hidden");
+}
 
-
+function hidePopup() {
+    document.getElementById("default-modal").classList.add('hidden');
+}
