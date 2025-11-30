@@ -7,6 +7,7 @@
     <title>OddsseyApp</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="script.js"></script>
+    <link rel="stylesheet" href="animation.css">
 </head>
 
 <body class="bg-gradient-to-r from-teal-400 to-yellow-200">
@@ -71,14 +72,13 @@
                     </div>
                 </form>
                 
-                
                 </div>
     
             </div>
         </div>
 
         <!-- Main modal -->
-        <div id="default-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed z-50 justify-center items-center w-full md:inset-0 h-full border">
+        <div id="default-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed z-50 justify-center items-center w-full h-full md:inset-0 h-1/2">
             <div class="relative top-16 p-4 w-full max-w-2xl mx-auto">
                 <!-- Modal content -->
                     <div class="relative bg-white border rounded-md shadow-sm p-4 md:p-6">
@@ -97,8 +97,13 @@
                         <p 
                             class=" font-medium text-gray-700 mb-2 text-center"
                             id = "aiResponse"
-                            > ... waiting for ai response ...
+                            >
                         </p>
+                        <div id="typewriter" class="mx-auto w-min">
+                            <div id="slide"><i></i></div>
+                            <div id="paper"></div>
+                            <div id="keyboard"></div>
+                        </div>
                     </div>
                     <!-- Modal footer -->
                     <div class="flex items-center border-t space-x-4 pt-4 md:pt-5">
@@ -109,7 +114,7 @@
                             class="bg-brand box-border border hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none content-center"
                             >New story
                         </button>
-
+                        <audio id="aiAudio" controls></audio>
                         <button 
                             id = "continue"
                             type="submit" 
@@ -117,9 +122,7 @@
                             hidden
                             >Continue
                         </button>
-                        <audio id="aiAudio" controls></audio>
                     </div>
-
                 </div>
             </div>
         </div>

@@ -1,3 +1,9 @@
+function waitForContinue(buttonId) {
+  return new Promise(resolve => {
+    document.getElementById(buttonId).addEventListener('click', resolve, { once: true });
+  });
+}
+
 function readHomerToggle() {
   const toggle = document.getElementById('homer');
   console.log("Checked:", toggle.checked);
@@ -78,6 +84,7 @@ async function playStory() {
         p.innerHTML = `<b>${seg.speaker} (${seg.voice}):</b> ${seg.text}`;
         storyDiv.appendChild(p);
         
+        document.getElementById("typewriter").hidden = true;
         document.getElementById("continue").hidden = false;
         await new Promise(resolve => {
         audioEl.src = url;        
@@ -110,16 +117,16 @@ async function playStory() {
   
     console.log(data);
     
-
         
 
     //waits for the continue button to be pressed to get the next string read
-    await waitForContinue();
+    await waitForContinue("continue");
     
   
 }
 
 function showPopup() {
+    document.getElementById("typewriter").hidden = false;
     document.getElementById("default-modal").classList.remove("hidden");
 }
 
@@ -137,7 +144,7 @@ function hidePopup() {
 
 
     document.getElementById("default-modal").classList.add('hidden');
-    document.getElementById("aiResponse").innerHTML = "... waiting for ai response ...";
+    document.getElementById("aiResponse").innerHTML = "";
     console.log(document.getElementById("aiResponse"));
 }
 
