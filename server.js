@@ -27,7 +27,6 @@ app.post("/story", async (req, res) => {
       
       !!THIS IS A TEST, MAKE IT VERY SHORT,you can only use 50 words total!!
 
-      The story should be historic where possible, witty, and engaging.
       The narrator should function like the parts of a book that arent dialogue. So it should be the majority.
       Make scenes somewhat continuous. 
       Show, don't tell.
@@ -43,7 +42,7 @@ app.post("/story", async (req, res) => {
       - Every character name must be ONE word when referenced as a speaker, they may have a canon last name.
       - Assign each character ONE voice from the list, there may be multiple characters with the same model.
       - The CSV must include every character that speaks.
-      
+
       Then, after the CSV, write the story using:
       CharacterName: text
 
