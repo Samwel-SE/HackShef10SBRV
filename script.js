@@ -1,5 +1,3 @@
-
-
 function getFormInput() {
     return new Promise((resolve) => {
         const form = document.getElementById("myForm");
@@ -15,46 +13,9 @@ function getFormInput() {
     });
 }
 
-async function getsAIResponse() {
-    const { startLocation, endLocation } = await getFormInput();
-    console.log("Client sending:", startLocation, endLocation);
-
-    try {
-        const res = await fetch("http://localhost:3000/story", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ startLocation, endLocation })
-        });
-
-        const data = await res.json();
-        console.log("Story text received:", data.text);
-        console.log("Audio base64 length:", data.audio.length);
-
-        // Show story
-        document.getElementById("aiResponse").textContent = data.text;
-
-        // Play audio
-        const audioEl = document.getElementById("aiAudio");
-        const audioBlob = new Blob(
-            [Uint8Array.from(atob(data.audio), c => c.charCodeAt(0))],
-            { type: "audio/wav" }
-        );
-
-        // Revoke previous object URL to avoid memory leaks
-        if (audioEl.src) URL.revokeObjectURL(audioEl.src);
-        audioEl.src = URL.createObjectURL(audioBlob);
-
-        audioEl.load(); // Make sure browser loads the new blob
-        audioEl.play().then(() => console.log("Audio playing!"))
-                     .catch(err => console.error("Audio play error:", err));
-
-    } catch (err) {
-        console.error("Error fetching story:", err);
-    }
-}
-
 
 async function playStory() {
+  showPopup();
   const { startLocation, endLocation } = await getFormInput();
   console.log("Client sending:", startLocation, endLocation);
 
@@ -91,5 +52,10 @@ async function playStory() {
   }
 }
 
+function showPopup() {
+    document.getElementById("default-modal").classList.remove("hidden");
+}
 
-
+function hidePopup() {
+    document.getElementById("default-modal").classList.add('hidden');
+}
