@@ -55,10 +55,10 @@ async function playStory() {
         }else{
           p.innerHTML = `<b>${seg.speaker}:</b> ${seg.text}`;
         }
-
-        storySoFar.append(`${seg.speaker}: ${seg.text}\n`)
-
+        
         storyDiv.appendChild(p);
+        //storySoFar.append(`${seg.speaker}: ${seg.text}\n`)
+
         
         document.getElementById("typewriter").hidden = true;
         document.getElementById("continue").hidden = false;
