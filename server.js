@@ -12,18 +12,92 @@ app.use(express.json({ limit: "50mb" })); // Make sure large audio data works
 const voicesPool = ['echo', 'fable', 'onyx', 'nova', 'shimmer', 'coral', 'verse', 'ballad', 'alloy', 'sage', 'marin', 'cedar'];
 const narratorVoice = "ash";
 
+// Helper functions to generate prompts
+function homerPrompt(startLocation, endLocation, voicesPool, narratorVoice) {
+  return `Write a story from the perspective of Homer Simpson that takes place 
+      from ${startLocation} to ${endLocation}.
+      Talk like Homer Simpson
+      Make scenes somewhat continuous. 
+      Show, don't tell.
+      Dont abuse dialogue, but dont be too afraid of having sizable section of dialogue.
+      You should have some main characters and side characters from the Simpsons
 
-app.post("/story", async (req, res) => {
-  const { startLocation, endLocation } = req.body;
+      First, output a CSV with the columns: Character, Voice
+      Use ONLY the following voices for characters:
+      ${voicesPool.join(", ")}
+      
+      Rules:
+      - Narrator must always have the voice "${narratorVoice}"
+      - Every character name must be ONE word when referenced as a speaker, they may have a canon last name.
+      - Assign each character ONE voice from the list, there may be multiple characters with the same model.
+      - The CSV must include every character that speaks.
+      - Max 200 Words!!!
+      
+      Then, after the CSV, write the story using:
+      CharacterName: text
+      
+      Do NOT put voices inside the story itself.
+      
+      Format strictly like:
+      
+      ### VOICE_MAP_CSV
+      Character,Voice
+      Narrator,ash
+      Ares,onyx
+      ...
+      
+      ### STORY
+      Narrator: text...
+      Ares: text...
+      Hera: text..
+      `;
+}
 
-  
-  console.log("Starting City:", startLocation, "Ending City:", endLocation);
-  
-  try {
-    // Generate story with speaker tags
-    const textResponse = await client.responses.create({
-      model: "gpt-4-turbo",
-      input: `Write a story like Homer's "Odyssey" that takes place from ${startLocation} to ${endLocation}.
+function brainRotPrompt(startLocation, endLocation, voicesPool, narratorVoice) {
+  return `Write a story that takes place from ${startLocation} to ${endLocation}.
+    include as much braintrot as possible. Include the brainrot that you know and words like "67", "sigma", "skibidi", "rizzler
+    "lebron james", "9/11 tradegy", "cisco packet tracer".
+    Include these words as much as possible  
+    The story should be historic where possible, witty, and engaging.
+      The narrator should function like the parts of a book that arent dialogue. So it should be the majority.
+      Make scenes somewhat continuous. 
+      Show, don't tell.
+      Dont abuse dialogue, but dont be too afraid of having sizable section of dialogue.
+      You should have some main characters and side characters.
+
+      First, output a CSV with the columns: Character, Voice
+      Use ONLY the following voices for characters:
+      ${voicesPool.join(", ")}
+      
+      Rules:
+      - Narrator must always have the voice "${narratorVoice}"
+      - Every character name must be ONE word when referenced as a speaker, they may have a canon last name.
+      - Assign each character ONE voice from the list, there may be multiple characters with the same model.
+      - The CSV must include every character that speaks.
+      - Max 200 Words!!!
+      
+      Then, after the CSV, write the story using:
+      CharacterName: text
+      
+      Do NOT put voices inside the story itself.
+      
+      Format strictly like:
+      
+      ### VOICE_MAP_CSV
+      Character,Voice
+      Narrator,ash
+      Ares,onyx
+      ...
+      
+      ### STORY
+      Narrator: text...
+      Ares: text...
+      Hera: text..
+      `;
+}
+
+function normalPrompt(startLocation, endLocation, voicesPool, narratorVoice) {
+  return `Write a story like Homer's "Odyssey" that takes place from ${startLocation} to ${endLocation}.
       The story should be historic where possible, witty, and engaging.
       The narrator should function like the parts of a book that arent dialogue. So it should be the majority.
       Make scenes somewhat continuous. 
@@ -59,7 +133,38 @@ app.post("/story", async (req, res) => {
       Narrator: text...
       Ares: text...
       Hera: text..
-      `
+      `;
+}
+
+
+
+app.post("/story", async (req, res) => {
+  const { startLocation, endLocation, mode } = req.body;
+
+  let prompt = "";
+  
+  if (mode === "homer") {
+    prompt = homerPrompt(startLocation, endLocation, voicesPool, narratorVoice);
+  } 
+  
+  else if (mode === "brainRot") {
+    prompt = brainRotPrompt(startLocation, endLocation, voicesPool, narratorVoice);
+  } 
+  
+  else {
+    prompt = normalPrompt(startLocation, endLocation, voicesPool, narratorVoice);
+  }
+
+  console.log(prompt);
+  console.log("Starting City:", startLocation, "Ending City:", endLocation, "Mode:", mode);
+  
+
+
+  try {
+    // Generate story with speaker tags
+    const textResponse = await client.responses.create({
+      model: "gpt-4-turbo",
+      input: prompt
     });
     
     const storyText = textResponse.output_text;
@@ -126,8 +231,6 @@ app.post("/story", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
-
 
 
 app.listen(3000, () => console.log("Server running on port 3000"));
