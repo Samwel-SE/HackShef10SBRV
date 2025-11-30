@@ -4,23 +4,7 @@ function waitForContinue(buttonId) {
   });
 }
 
-function readHomerToggle() {
-  const toggle = document.getElementById('homer');
-  console.log("Checked:", toggle.checked);
-  if (toggle.checked){
-    mode = "homer"
-  }
-  console.log(mode);
-}
 
-function readBrnRtToggle() {
-  const toggle = document.getElementById('brainRot');
-  console.log("Checked:", toggle.checked);
-  if (toggle.checked){
-    mode = "brainRot"
-  }
-  console.log(mode);
-}
 
 function getFormInput() {
     let mode = "";
