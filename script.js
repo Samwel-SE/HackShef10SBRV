@@ -31,20 +31,24 @@ async function playStory() {
   const audioEl = document.getElementById("aiAudio");
   const storyDiv = document.getElementById("aiResponse");
   storyDiv.innerHTML = "";
+  buttonPressed = true;
 
   for (const seg of data.segments) {
     const audioBlob = new Blob(
       [Uint8Array.from(atob(seg.audio), c => c.charCodeAt(0))],
       { type: "audio/wav" }
     );
-
+    
     const url = URL.createObjectURL(audioBlob);
-
     // Show text and voice info
     const p = document.createElement("p");
     p.innerHTML = `<b>${seg.speaker} (${seg.voice}):</b> ${seg.text}`;
-    storyDiv.appendChild(p);
-
+    
+    
+    if (buttonPressed){
+        storyDiv.appendChild(p);
+    }
+    
     await new Promise(resolve => {
       audioEl.src = url;
       audioEl.play();
